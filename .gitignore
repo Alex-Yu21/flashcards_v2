@@ -43,3 +43,32 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+# --- Firebase client configs 
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+macos/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+
+# --- Firebase Admin / Service Account keys 
+serviceAccountKey.json
+**/*serviceAccount*.json
+**/*-adminsdk-*.json
+**/*firebase-adminsdk-*.json
+*.p12
+*.pem
+*.p8
+
+# --- Firebase CLI / локальные артефакты
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+storage-debug.log
+
+# --- Crashlytics/анализ (генерируемые/локальные)
+**/crashlytics-build.properties
+**/fabric.properties
+
+
