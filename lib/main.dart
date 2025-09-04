@@ -22,7 +22,22 @@ class App extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 35, 12, 138),
         ),
       ),
-      home: AuthView(),
+      home:
+          // StreamBuilder(
+          //   stream: FirebaseAuth.instance.authStateChanges(),
+          //   builder: (ctx, snapshot) {
+          //     if (snapshot.connectionState == ConnectionState.waiting) {
+          //       return const LoadView();
+          //     }
+          //     if (snapshot.hasData) {
+          //       return const HomeView();
+          //     } else {
+          //       return
+          const AuthView(),
+      // ;
+      //     }
+      //   },
+      // ),
     );
   }
 }
