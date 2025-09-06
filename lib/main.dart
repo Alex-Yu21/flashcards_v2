@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flashcards_v2/auth/presentation/views/auth_view.dart';
+import 'package:flashcards_v2/core/theme/theme_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
+
+final theme = ThemeController();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,29 +18,32 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Just flashcards',
-      theme: ThemeData().copyWith(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 35, 12, 138),
-        ),
-      ),
-      home:
-          // StreamBuilder(
-          //   stream: FirebaseAuth.instance.authStateChanges(),
-          //   builder: (ctx, snapshot) {
-          //     if (snapshot.connectionState == ConnectionState.waiting) {
-          //       return const LoadView();
+    return ValueListenableBuilder<CustomTheme?>(
+      valueListenable: theme,
+      builder: (_, __, ___) {
+        return MaterialApp(
+          title: 'Just flashcards',
+          theme: theme.theme,
+          darkTheme: theme.darkTheme,
+          themeMode: theme.themeMode,
+          home:
+              // StreamBuilder(
+              //   stream: FirebaseAuth.instance.authStateChanges(),
+              //   builder: (ctx, snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return const LoadView();
+              //     }
+              //     if (snapshot.hasData) {
+              //       return const HomeView();
+              //     } else {
+              //       return
+              const AuthView(),
+          // ;
           //     }
-          //     if (snapshot.hasData) {
-          //       return const HomeView();
-          //     } else {
-          //       return
-          const AuthView(),
-      // ;
-      //     }
-      //   },
-      // ),
+          //   },
+          // ),
+        );
+      },
     );
   }
 }
