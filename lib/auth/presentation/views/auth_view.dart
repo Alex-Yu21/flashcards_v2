@@ -79,8 +79,8 @@ class _AuthViewState extends State<AuthView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Log In',
+                  Text(
+                    _isLogin ? 'Log In' : 'Sign Up',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   Text(
