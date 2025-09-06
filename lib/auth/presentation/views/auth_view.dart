@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flashcards_v2/auth/presentation/views/home_view.dart';
+import 'package:flashcards_v2/home_view.dart';
 import 'package:flutter/material.dart';
 
 final _firebase = FirebaseAuth.instance;
@@ -52,7 +52,7 @@ class _AuthViewState extends State<AuthView> {
     final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 240, 240, 242),
+        backgroundColor: scheme.surface,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -64,16 +64,13 @@ class _AuthViewState extends State<AuthView> {
               },
               child: Text(
                 'Skip >>',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color.fromARGB(255, 149, 149, 170),
-                ),
+                style: TextStyle(fontSize: 16, color: scheme.onSurfaceVariant),
               ),
             ),
           ),
         ],
       ),
-      backgroundColor: const Color.fromARGB(255, 240, 240, 242),
+      backgroundColor: scheme.surface,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -82,20 +79,22 @@ class _AuthViewState extends State<AuthView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    _isLogin ? 'Log In' : 'Sign Up',
+                  const Text(
+                    'Log In',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'Enter your details below',
+                    _isLogin
+                        ? 'Enter your details below'
+                        : 'Enter your details below',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Color.fromARGB(255, 149, 149, 170),
+                      color: scheme.onSurfaceVariant,
                     ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Card(
-                    color: Colors.white,
+                    color: scheme.surfaceContainerLowest,
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Form(
@@ -108,11 +107,11 @@ class _AuthViewState extends State<AuthView> {
                               'Your Email',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Color.fromARGB(255, 149, 149, 170),
+                                color: scheme.onSurfaceVariant,
                               ),
                             ),
                             TextFormField(
-                              decoration: InputDecoration(),
+                              decoration: const InputDecoration(),
                               keyboardType: TextInputType.emailAddress,
                               autocorrect: false,
                               textCapitalization: TextCapitalization.none,
@@ -128,16 +127,16 @@ class _AuthViewState extends State<AuthView> {
                                 _enteredEmail = value!;
                               },
                             ),
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Text(
                               'Password',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Color.fromARGB(255, 149, 149, 170),
+                                color: scheme.onSurfaceVariant,
                               ),
                             ),
                             TextFormField(
-                              decoration: InputDecoration(),
+                              decoration: const InputDecoration(),
                               obscureText: true,
                               validator: (value) {
                                 if (value == null || value.trim().length < 6) {
@@ -163,19 +162,18 @@ class _AuthViewState extends State<AuthView> {
                           value: null,
                           onChanged: (isLogin) {},
                         ),
-
                         Expanded(
                           child: Text(
                             'By creating an account you have to agree with our them & condication.',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Color.fromARGB(255, 149, 149, 170),
+                              color: scheme.onSurfaceVariant,
                             ),
                           ),
                         ),
                       ],
                     ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -185,10 +183,10 @@ class _AuthViewState extends State<AuthView> {
                           states,
                         ) {
                           if (states.contains(WidgetState.disabled)) {
-                            return scheme.primary.withOpacity(0.38);
+                            return scheme.primary.withValues(alpha: 0.38);
                           }
                           if (states.contains(WidgetState.pressed)) {
-                            return scheme.primary.withOpacity(0.90);
+                            return scheme.primary.withValues(alpha: 0.90);
                           }
                           return scheme.primary;
                         }),
@@ -197,14 +195,14 @@ class _AuthViewState extends State<AuthView> {
                       child: Text(
                         _isLogin ? 'Log in' : 'Create account',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: scheme.onPrimary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -214,7 +212,7 @@ class _AuthViewState extends State<AuthView> {
                             : 'Already have an account？ ',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color.fromARGB(255, 149, 149, 170),
+                          color: scheme.onSurfaceVariant,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -231,13 +229,13 @@ class _AuthViewState extends State<AuthView> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Row(
                     children: [
                       Expanded(
                         child: Divider(
                           thickness: 2,
-                          color: Color.fromARGB(255, 149, 149, 170),
+                          color: scheme.onSurfaceVariant,
                         ),
                       ),
                       Padding(
@@ -247,7 +245,7 @@ class _AuthViewState extends State<AuthView> {
 
                           style: TextStyle(
                             fontSize: 16,
-                            color: Color.fromARGB(255, 149, 149, 170),
+                            color: scheme.onSurfaceVariant,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -255,12 +253,12 @@ class _AuthViewState extends State<AuthView> {
                       Expanded(
                         child: Divider(
                           thickness: 2,
-                          color: Color.fromARGB(255, 149, 149, 170),
+                          color: scheme.onSurfaceVariant,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Center(
                     child: SizedBox(
                       width: 34,
