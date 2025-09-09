@@ -4,13 +4,34 @@ import 'package:flutter/material.dart';
 
 final _firebase = FirebaseAuth.instance;
 
+// TODO sizes in a different fail?
+
+class Gaps {
+  const Gaps._();
+  static const v16 = SizedBox(height: 16);
+  static const v24 = SizedBox(height: 24);
+}
+
+class Pads {
+  const Pads._();
+  static const screenH24 = EdgeInsets.symmetric(horizontal: 24);
+  static const appBarH24 = EdgeInsets.symmetric(horizontal: 24);
+  static const cardAll16 = EdgeInsets.all(16);
+  static const dividerLabelH16 = EdgeInsets.symmetric(horizontal: 16);
+}
+
+class FontSizes {
+  const FontSizes._();
+  static const double s16 = 16.0;
+  static const double s32 = 32.0;
+}
+
 class AuthView extends StatefulWidget {
   const AuthView({super.key});
 
   @override
   State<AuthView> createState() => _AuthViewState();
 }
-// TODO text sizes
 
 class _AuthViewState extends State<AuthView> {
   final _form = GlobalKey<FormState>();
@@ -56,7 +77,7 @@ class _AuthViewState extends State<AuthView> {
         backgroundColor: scheme.surface,
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: Pads.appBarH24,
             child: GestureDetector(
               onTap: () {
                 Navigator.of(
@@ -65,7 +86,10 @@ class _AuthViewState extends State<AuthView> {
               },
               child: Text(
                 'Skip >>',
-                style: TextStyle(fontSize: 16, color: scheme.onSurfaceVariant),
+                style: TextStyle(
+                  fontSize: FontSizes.s16,
+                  color: scheme.onSurfaceVariant,
+                ),
               ),
             ),
           ),
@@ -76,28 +100,31 @@ class _AuthViewState extends State<AuthView> {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: Pads.screenH24,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     _isLogin ? 'Log In' : 'Sign Up',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: FontSizes.s32,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     _isLogin
                         ? 'Enter your details below'
                         : 'Enter your details below',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: FontSizes.s16,
                       color: scheme.onSurfaceVariant,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  Gaps.v24,
                   Card(
                     color: scheme.surfaceContainerLowest,
                     child: Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: Pads.cardAll16,
                       child: Form(
                         key: _form,
                         child: Column(
@@ -107,7 +134,7 @@ class _AuthViewState extends State<AuthView> {
                             Text(
                               'Your Email',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: FontSizes.s16,
                                 color: scheme.onSurfaceVariant,
                               ),
                             ),
@@ -128,11 +155,11 @@ class _AuthViewState extends State<AuthView> {
                                 _enteredEmail = value!;
                               },
                             ),
-                            const SizedBox(height: 24),
+                            Gaps.v24,
                             Text(
                               'Password',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: FontSizes.s16,
                                 color: scheme.onSurfaceVariant,
                               ),
                             ),
@@ -154,7 +181,7 @@ class _AuthViewState extends State<AuthView> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  Gaps.v24,
                   if (!_isLogin)
                     Row(
                       children: [
@@ -167,14 +194,14 @@ class _AuthViewState extends State<AuthView> {
                           child: Text(
                             'By creating an account you have to agree with our therms & condications.',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: FontSizes.s16,
                               color: scheme.onSurfaceVariant,
                             ),
                           ),
                         ),
                       ],
                     ),
-                  const SizedBox(height: 16),
+                  Gaps.v16,
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -197,13 +224,13 @@ class _AuthViewState extends State<AuthView> {
                         _isLogin ? 'Log in' : 'Create account',
                         style: TextStyle(
                           color: scheme.onPrimary,
-                          fontSize: 16,
+                          fontSize: FontSizes.s16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  Gaps.v16,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -212,7 +239,7 @@ class _AuthViewState extends State<AuthView> {
                             ? "Don't have an account?"
                             : 'Already have an account？ ',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: FontSizes.s16,
                           color: scheme.onSurfaceVariant,
                           fontWeight: FontWeight.w600,
                         ),
@@ -225,12 +252,15 @@ class _AuthViewState extends State<AuthView> {
                         },
                         child: Text(
                           _isLogin ? 'Sign Up' : 'Log in',
-                          style: TextStyle(color: scheme.primary, fontSize: 16),
+                          style: TextStyle(
+                            color: scheme.primary,
+                            fontSize: FontSizes.s16,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  Gaps.v24,
                   Row(
                     children: [
                       Expanded(
@@ -240,12 +270,11 @@ class _AuthViewState extends State<AuthView> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: Pads.dividerLabelH16,
                         child: Text(
                           _isLogin ? 'Or log in with' : 'Or sign up with',
-
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: FontSizes.s16,
                             color: scheme.onSurfaceVariant,
                             fontWeight: FontWeight.w600,
                           ),
@@ -259,7 +288,7 @@ class _AuthViewState extends State<AuthView> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  Gaps.v24,
                   Center(
                     child: SizedBox(
                       width: 34,
