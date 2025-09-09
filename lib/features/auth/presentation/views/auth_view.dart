@@ -10,6 +10,7 @@ class AuthView extends StatefulWidget {
   @override
   State<AuthView> createState() => _AuthViewState();
 }
+// TODO text sizes
 
 class _AuthViewState extends State<AuthView> {
   final _form = GlobalKey<FormState>();
@@ -164,7 +165,7 @@ class _AuthViewState extends State<AuthView> {
                         ),
                         Expanded(
                           child: Text(
-                            'By creating an account you have to agree with our them & condication.',
+                            'By creating an account you have to agree with our therms & condications.',
                             style: TextStyle(
                               fontSize: 16,
                               color: scheme.onSurfaceVariant,
