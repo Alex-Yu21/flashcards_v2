@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flashcards_v2/auth/presentation/views/auth_view.dart';
 import 'package:flashcards_v2/core/theme/theme_controller.dart';
+import 'package:flashcards_v2/features/auth/presentation/views/auth_view.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';

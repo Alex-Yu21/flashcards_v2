@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flashcards_v2/home_view.dart';
+import 'package:flashcards_v2/features/learning/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 
 final _firebase = FirebaseAuth.instance;
