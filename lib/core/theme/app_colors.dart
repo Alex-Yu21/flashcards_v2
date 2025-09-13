@@ -34,6 +34,7 @@ class AppColors {
       surface: isDark ? _bgDark : _bgLight,
       onSurfaceVariant: isDark ? _mutedDark : _mutedLight,
       surfaceContainerLowest: isDark ? _cardDark : _cardLight,
+      surfaceContainerLow: isDark ? _cardDark : _cardLight,
     );
   }
 
