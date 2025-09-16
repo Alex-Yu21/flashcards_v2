@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flashcards_v2/app/navigation/destinations.dart';
 import 'package:flashcards_v2/app/navigation/layout_scaffold.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/auth_view.dart';
@@ -9,23 +7,10 @@ import 'package:go_router/go_router.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-class GoRouterRefreshStream extends ChangeNotifier {
-  GoRouterRefreshStream(Stream<dynamic> stream) {
-    _sub = stream.asBroadcastStream().listen((_) => notifyListeners());
-  }
-  late final StreamSubscription _sub;
-
-  @override
-  void dispose() {
-    _sub.cancel();
-    super.dispose();
-  }
-}
-
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: Routes.homeView,
-  // refreshListenable: GoRouterRefreshStream(FirebaseAuth.instance),
+
   routes: [
     GoRoute(
       path: Routes.authView,
