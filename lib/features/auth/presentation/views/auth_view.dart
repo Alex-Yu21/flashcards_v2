@@ -84,6 +84,7 @@ class _AuthViewState extends State<AuthView> {
                   context,
                 ).push(MaterialPageRoute(builder: (ctx) => const HomeView()));
               },
+              // TODO: load shell а не просто один homeview
               child: Text(
                 'Skip >>',
                 style: TextStyle(

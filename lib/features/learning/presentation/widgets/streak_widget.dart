@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 // Константы дефолтных значений (плейсхолдер до Riverpod)
-const int kGoalPerDay = 50;
+const int kGoalPerDay = 30;
 const List<int> kDefaultLast7 = [32, 50, 24, 41, 50, 12, 20];
 const List<String> kDefaultWeek = [
   'Mon',
@@ -15,7 +15,7 @@ const List<String> kDefaultWeek = [
   'Sun',
 ];
 
-const double kChartHeight = 120;
+const double kChartHeight = 100;
 const double kPointRadius = 4;
 const double kPadL = 8, kPadR = 8, kPadT = 8, kPadB = 18;
 const double kStrokeWidth = 2;

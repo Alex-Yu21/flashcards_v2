@@ -5,8 +5,7 @@ import 'package:flashcards_v2/features/learning/presentation/widgets/streak_widg
 import 'package:flutter/material.dart';
 
 const double kPad = 20;
-const kInsetsAll = EdgeInsets.symmetric(horizontal: kPad);
-const kInsetsH = EdgeInsets.symmetric(horizontal: kPad);
+const kPad20 = EdgeInsets.symmetric(horizontal: kPad);
 const kInsetsV = EdgeInsets.symmetric(vertical: kPad);
 
 const double kHeaderStackHeight = 250;
@@ -14,12 +13,12 @@ const double kHeaderHeight = 180;
 const double kHeaderTitleBottomGap = 32;
 
 const double kCardTopOffset = 120;
-const double kCardHeight = 120;
+const double kCardHeight = 132;
 const double kProgressBarHeight = 4;
 
 const double kLearningSectionRadius = 32;
 const double kLearningSectionElevation = 0;
-const double kDeckHeightFactor = 0.30;
+const double kDeckHeightFactor = 0.25;
 const double kDeckWidthFactor = 0.90;
 
 const double kAvatarSize = 56;
@@ -67,7 +66,7 @@ class HomeView extends StatelessWidget {
                     height: kHeaderHeight,
                     color: theme.primaryColor,
                     child: Padding(
-                      padding: kInsetsAll,
+                      padding: kPad20,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +101,7 @@ class HomeView extends StatelessWidget {
                       height: kCardHeight,
                       child: Card(
                         child: Padding(
-                          padding: kInsetsAll,
+                          padding: kPad20,
                           child: Column(
                             children: [
                               const SizedBox(height: 16),
@@ -148,9 +147,9 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             ),
-
-            const Padding(padding: kInsetsH, child: StreakWidget()),
-
+            SizedBox(height: 32),
+            const Padding(padding: kPad20, child: StreakWidget()),
+            Spacer(),
             const _LearningSectionMock(),
           ],
         ),
@@ -217,7 +216,7 @@ class _LearningSectionMock extends StatelessWidget {
     final h = size.height;
 
     return Padding(
-      padding: kInsetsAll,
+      padding: kPad20,
       child: Card(
         margin: EdgeInsets.zero,
         elevation: kLearningSectionElevation,
@@ -229,7 +228,7 @@ class _LearningSectionMock extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(padding: kInsetsAll, child: DotStatusWidget()),
+            const Padding(padding: kPad20, child: DotStatusWidget()),
             Padding(
               padding: const EdgeInsets.only(right: kPad),
               child: SizedBox(
