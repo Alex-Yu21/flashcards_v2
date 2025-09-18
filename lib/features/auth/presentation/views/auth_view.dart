@@ -6,6 +6,8 @@ final _firebase = FirebaseAuth.instance;
 
 // TODO sizes in a different fail?
 
+//TODO вынести логику из сетстейта логин/регистрация в роутер через redirect
+
 class Gaps {
   const Gaps._();
   static const v16 = SizedBox(height: 16);
