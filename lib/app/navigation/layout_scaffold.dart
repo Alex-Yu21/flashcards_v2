@@ -12,6 +12,8 @@ class LayoutScaffold extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (ctx, snapshot) {
@@ -24,16 +26,30 @@ class LayoutScaffold extends StatelessWidget {
 
         return Scaffold(
           body: navigationShell,
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: navigationShell.currentIndex,
-            onDestinationSelected: navigationShell.goBranch,
-            indicatorColor: Theme.of(context).colorScheme.primary,
-            destinations: destinations
-                .map(
-                  (d) =>
-                      NavigationDestination(icon: Icon(d.icon), label: d.label),
-                )
-                .toList(),
+
+          bottomNavigationBar: NavigationBarTheme(
+            data: NavigationBarThemeData(
+              backgroundColor: cs.surface,
+              indicatorColor: cs.primary,
+              iconTheme: WidgetStateProperty.resolveWith((states) {
+                return IconThemeData(
+                  color: states.contains(WidgetState.selected)
+                      ? cs.onPrimary
+                      : cs.onSurfaceVariant,
+                );
+              }),
+            ),
+            child: NavigationBar(
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+              selectedIndex: navigationShell.currentIndex,
+              onDestinationSelected: navigationShell.goBranch,
+              indicatorColor: Theme.of(context).colorScheme.primary,
+              destinations: destinations
+                  .map(
+                    (d) => NavigationDestination(icon: Icon(d.icon), label: ''),
+                  )
+                  .toList(),
+            ),
           ),
         );
       },

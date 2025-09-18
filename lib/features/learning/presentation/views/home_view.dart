@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 const double kPad = 20;
 const kPad20 = EdgeInsets.symmetric(horizontal: kPad);
-const kInsetsV = EdgeInsets.symmetric(vertical: kPad);
 
 const double kHeaderStackHeight = 250;
 const double kHeaderHeight = 180;
@@ -38,14 +37,14 @@ class HomeView extends StatelessWidget {
     final double avatarTop = (kCardTopOffset - kAvatarSize) / 2;
 
     final titleStyle = theme.textTheme.headlineSmall?.copyWith(
-      color: Colors.white,
+      color: cs.onPrimary,
       fontWeight: FontWeight.bold,
     );
     final subtitleStyle = theme.textTheme.bodyLarge?.copyWith(
-      color: Colors.white,
+      color: cs.onPrimary,
     );
     final metricLabelStyle = theme.textTheme.bodyMedium?.copyWith(
-      color: Colors.grey,
+      color: cs.onSurfaceVariant,
     );
     final metricValueStyle = theme.textTheme.headlineSmall?.copyWith(
       fontWeight: FontWeight.bold,
@@ -133,9 +132,10 @@ class HomeView extends StatelessWidget {
                               ),
                               Spacer(),
                               Container(
+                                // TODO LinearProgressIndicator
                                 width: double.infinity,
                                 height: kProgressBarHeight,
-                                color: Colors.black,
+                                color: cs.onSurfaceVariant,
                               ),
                               const SizedBox(height: kPad),
                             ],
