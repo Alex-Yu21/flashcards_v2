@@ -1,63 +1,106 @@
 import 'package:flashcards_v2/app/navigation/destinations.dart';
 import 'package:flashcards_v2/app/navigation/layout_scaffold.dart';
+import 'package:flashcards_v2/features/auth/domain/entities/auth_status.dart';
+import 'package:flashcards_v2/features/auth/domain/entities/session.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/auth_view.dart';
+import 'package:flashcards_v2/features/auth/presentation/views/load_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+GoRouter createRouter({
+  required Session initial,
+  required Session Function() currentSession,
+}) {
+  final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-final router = GoRouter(
-  navigatorKey: _rootNavigatorKey,
-  initialLocation: Routes.homeView,
+  final String initialLocation = switch (initial.status) {
+    AuthStatus.authenticated => Routes.homeView,
+    AuthStatus.unauthenticated => Routes.authView,
+    AuthStatus.unknown => Routes.authView,
+    // TODO 2 вида auth экрана переключение отсюда
+  };
 
-  routes: [
-    GoRoute(
-      path: Routes.authView,
-      builder: (context, state) => const AuthView(),
-    ),
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) =>
-          LayoutScaffold(navigationShell: navigationShell),
+  return GoRouter(
+    navigatorKey: rootNavigatorKey,
+    initialLocation: initialLocation,
 
-      branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: Routes.homeView,
-              builder: (context, state) => const HomeView(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: Routes.categoriesView,
-              builder: (context, state) => const CategoriesView(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: Routes.collectionsView,
-              builder: (context, state) => const CollectionsView(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: Routes.profileView,
-              builder: (context, state) => const ProfileView(),
-            ),
-          ],
-        ),
-      ],
-    ),
-  ],
-);
+    redirect: (context, state) {
+      final s = currentSession();
+      final loc = state.matchedLocation;
 
+      if (s.status == AuthStatus.unknown) {
+        if (loc != Routes.loadView) return Routes.loadView;
+        return null;
+      }
+
+      if (s.status == AuthStatus.unauthenticated) {
+        if (loc != Routes.authView) return Routes.authView;
+        return null;
+      }
+
+      if (s.status == AuthStatus.authenticated) {
+        if (loc == Routes.authView || loc == Routes.loadView) {
+          return Routes.homeView;
+        }
+        return null;
+      }
+
+      return null;
+    },
+
+    routes: [
+      GoRoute(
+        path: Routes.loadView,
+        builder: (context, state) => const LoadView(),
+      ),
+      GoRoute(
+        path: Routes.authView,
+        builder: (context, state) => const AuthView(),
+      ),
+
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            LayoutScaffold(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              //TODO add routes
+              GoRoute(
+                path: Routes.homeView,
+                builder: (context, state) => const HomeView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.categoriesView,
+                builder: (context, state) => const CategoriesView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.collectionsView,
+                builder: (context, state) => const CollectionsView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.profileView,
+                builder: (context, state) => const ProfileView(),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  );
+}
 // TODO: real screens
 
 class CategoriesView extends StatelessWidget {
