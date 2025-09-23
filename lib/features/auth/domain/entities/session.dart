@@ -7,5 +7,5 @@ class Session {
   const Session({required this.status, this.uid, this.isAnonymous = false});
 
   bool get isLoggedIn => status == AuthStatus.authenticated;
-  bool get isGuest => isLoggedIn && isAnonymous;
+  bool get isGuest => status == AuthStatus.unauthenticated && isAnonymous;
 }

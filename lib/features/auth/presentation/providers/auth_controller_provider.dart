@@ -14,7 +14,20 @@ class AuthController extends StateNotifier<Session> {
     _sub = _repo.rawUserStream.listen((obj) {
       final dynamic user = obj;
       if (user == null) {
-        state = const Session(status: AuthStatus.unauthenticated);
+        state = const Session(
+          status: AuthStatus.unauthenticated,
+          isAnonymous: false,
+        );
+        return;
+      }
+
+      final bool isAnon = (user.isAnonymous as bool?) ?? false;
+      if (isAnon) {
+        state = Session(
+          status: AuthStatus.unauthenticated,
+          uid: user.uid as String?,
+          isAnonymous: true,
+        );
       } else {
         state = Session(
           status: AuthStatus.authenticated,

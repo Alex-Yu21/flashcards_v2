@@ -34,7 +34,11 @@ GoRouter createRouter({
       }
 
       if (s.status == AuthStatus.unauthenticated) {
-        return null;
+        if (s.isAnonymous) {
+          return null;
+        } else {
+          return (loc == Routes.authView) ? null : Routes.authView;
+        }
       }
 
       if (s.status == AuthStatus.authenticated) {
