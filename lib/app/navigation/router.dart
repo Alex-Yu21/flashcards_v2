@@ -18,7 +18,6 @@ GoRouter createRouter({
     AuthStatus.authenticated => Routes.homeView,
     AuthStatus.unauthenticated => Routes.authView,
     AuthStatus.unknown => Routes.authView,
-    // TODO 2 вида auth экрана переключение отсюда
   };
 
   return GoRouter(
@@ -35,7 +34,6 @@ GoRouter createRouter({
       }
 
       if (s.status == AuthStatus.unauthenticated) {
-        if (loc != Routes.authView) return Routes.authView;
         return null;
       }
 

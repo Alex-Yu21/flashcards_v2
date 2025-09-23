@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flashcards_v2/features/learning/presentation/views/home_view.dart';
+import 'package:flashcards_v2/app/navigation/destinations.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -38,7 +39,7 @@ class AuthView extends StatefulWidget {
 class _AuthViewState extends State<AuthView> {
   final _form = GlobalKey<FormState>();
 
-  var _isLogin = true;
+  var _isLogin = false;
   var _enteredEmail = '';
   var _enteredPassword = '';
 
@@ -80,13 +81,10 @@ class _AuthViewState extends State<AuthView> {
         actions: [
           Padding(
             padding: Pads.appBarH24,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (ctx) => const HomeView()));
+            child: TextButton(
+              onPressed: () {
+                context.go(Routes.homeView);
               },
-              // TODO: load shell а не просто один homeview
               child: Text(
                 'Skip >>',
                 style: TextStyle(
