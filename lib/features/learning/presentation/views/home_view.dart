@@ -1,8 +1,10 @@
+import 'package:flashcards_v2/app/navigation/destinations.dart';
 import 'package:flashcards_v2/features/learning/domain/entities/flashcarde.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/dot_status_widget.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/start_learning_deck_widget.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/streak_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 const double kPad = 20;
 const kPad20 = EdgeInsets.symmetric(horizontal: kPad);
@@ -204,8 +206,6 @@ class _Avatar extends StatelessWidget {
   }
 }
 
-Future<void> _openLearningScreen(BuildContext context) async {}
-
 class _LearningSectionMock extends StatelessWidget {
   const _LearningSectionMock({super.key});
 
@@ -236,7 +236,9 @@ class _LearningSectionMock extends StatelessWidget {
                 width: w * kDeckWidthFactor,
                 child: StartLearningDeckWidget(
                   w: w,
-                  onTap: () {},
+                  onTap: () {
+                    context.go('${Routes.homeView}/${Routes.learningView}');
+                  },
                   cards: const <FlashcardEntity>[],
                 ),
               ),

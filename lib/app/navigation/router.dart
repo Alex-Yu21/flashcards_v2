@@ -5,6 +5,7 @@ import 'package:flashcards_v2/features/auth/domain/entities/session.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/auth_view.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/load_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/home_view.dart';
+import 'package:flashcards_v2/features/learning/presentation/views/learning_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,7 +18,7 @@ GoRouter createRouter({
   final String initialLocation = switch (initial.status) {
     AuthStatus.authenticated => Routes.homeView,
     AuthStatus.unauthenticated => Routes.authView,
-    AuthStatus.unknown => Routes.authView,
+    AuthStatus.unknown => Routes.loadView,
   };
 
   return GoRouter(
@@ -71,6 +72,12 @@ GoRouter createRouter({
               GoRoute(
                 path: Routes.homeView,
                 builder: (context, state) => const HomeView(),
+                routes: [
+                  GoRoute(
+                    path: Routes.learningView,
+                    builder: (context, state) => const LearningView(),
+                  ),
+                ],
               ),
             ],
           ),
@@ -131,3 +138,6 @@ class ProfileView extends StatelessWidget {
     return const Center(child: Text('ProfileView'));
   }
 }
+
+// TODO(next): AuthView → implement “Skip” flow to create anonymous user before go('/home')
+// TODO(next): Add deep-link cases and ensure guest can open them directly
