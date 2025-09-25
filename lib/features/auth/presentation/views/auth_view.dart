@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flashcards_v2/app/di/secrets.dart';
 import 'package:flashcards_v2/app/navigation/destinations.dart';
 import 'package:flashcards_v2/features/auth/presentation/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 // TODO sizes in a different fail?
 
@@ -71,7 +73,28 @@ class _AuthViewState extends ConsumerState<AuthView> {
     }
   }
 
-  Future<void> _googleSignIn() async {}
+  Future<void> _googleSignIn() async {
+    await GoogleSignIn.instance.initialize(
+      serverClientId: kServerClientId,
+      // clientId: '<iOS client id>'    TODO: iOS
+    );
+    await GoogleSignIn.instance.authenticate();
+
+    final signInEvent =
+        await GoogleSignIn.instance.authenticationEvents.firstWhere(
+              (e) => e is GoogleSignInAuthenticationEventSignIn,
+            )
+            as GoogleSignInAuthenticationEventSignIn;
+
+    final user = signInEvent.user;
+    final googleAuth = user.authentication;
+
+    await ref
+        .read(authRepositoryProvider)
+        .signInWithCredential(
+          GoogleAuthProvider.credential(idToken: googleAuth.idToken),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -312,6 +335,3 @@ class _AuthViewState extends ConsumerState<AuthView> {
     );
   }
 }
-
-// TODO(next): call signInAnonymously() then context.go(Routes.homeView)
-// ref.read(authControllerProvider.notifier).signInAnonymously();
