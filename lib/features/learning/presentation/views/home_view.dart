@@ -36,7 +36,7 @@ class HomeView extends ConsumerWidget {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
 
-    final double avatarTop = (kCardTopOffset - kAvatarSize) / 2;
+    final double avatarTop = (kCardTopOffset - kAvatarSize) / 1.5;
 
     final titleStyle = theme.textTheme.headlineSmall?.copyWith(
       color: cs.onPrimary,
@@ -66,6 +66,19 @@ class HomeView extends ConsumerWidget {
                     width: double.infinity,
                     height: kHeaderHeight,
                     color: theme.primaryColor,
+                  ),
+                  Positioned(
+                    top: avatarTop,
+                    left: kPad,
+                    child: _Avatar(
+                      size: kAvatarSize,
+                      borderWidth: kAvatarBorderWidth,
+                      image: session.photoUrl,
+                    ),
+                  ),
+                  Positioned(
+                    top: avatarTop,
+                    left: kPad + kAvatarSize,
                     child: Padding(
                       padding: kPad20,
                       child: Column(
@@ -83,16 +96,6 @@ class HomeView extends ConsumerWidget {
                           const SizedBox(height: kHeaderTitleBottomGap),
                         ],
                       ),
-                    ),
-                  ),
-
-                  Positioned(
-                    top: avatarTop,
-                    right: kPad,
-                    child: _Avatar(
-                      size: kAvatarSize,
-                      borderWidth: kAvatarBorderWidth,
-                      image: session.photoUrl,
                     ),
                   ),
 
@@ -169,7 +172,7 @@ class _Avatar extends StatelessWidget {
   final double size;
   final double borderWidth;
   final String? image;
-  // final String? initials;
+
   @override
   Widget build(BuildContext context) {
     final borderColor = Colors.white.withValues(alpha: 0.35);
