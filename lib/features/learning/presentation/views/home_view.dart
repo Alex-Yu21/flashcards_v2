@@ -1,9 +1,11 @@
 import 'package:flashcards_v2/app/navigation/destinations.dart';
+import 'package:flashcards_v2/features/auth/presentation/providers/auth_providers.dart';
 import 'package:flashcards_v2/features/learning/domain/entities/flashcarde.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/dot_status_widget.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/start_learning_deck_widget.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/streak_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 const double kPad = 20;
@@ -25,14 +27,12 @@ const double kDeckWidthFactor = 0.90;
 const double kAvatarSize = 56;
 const double kAvatarBorderWidth = 2;
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key, this.avatarImage, this.avatarInitials});
-
-  final ImageProvider? avatarImage;
-  final String? avatarInitials;
+class HomeView extends ConsumerWidget {
+  const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final session = ref.watch(authControllerProvider);
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
 
@@ -72,7 +72,12 @@ class HomeView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Hi, student', style: titleStyle),
+                          Text(
+                            session.displayName != null
+                                ? 'Hi, ${session.displayName}'
+                                : 'Hi, student',
+                            style: titleStyle,
+                          ),
                           const SizedBox(height: 4),
                           Text("Let's start learning!", style: subtitleStyle),
                           const SizedBox(height: kHeaderTitleBottomGap),
@@ -87,12 +92,10 @@ class HomeView extends StatelessWidget {
                     child: _Avatar(
                       size: kAvatarSize,
                       borderWidth: kAvatarBorderWidth,
-                      image: avatarImage,
-                      initials: avatarInitials,
+                      image: session.photoUrl,
                     ),
                   ),
 
-                  //
                   Positioned(
                     top: kCardTopOffset,
                     left: kPad,
@@ -161,32 +164,16 @@ class HomeView extends StatelessWidget {
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar({
-    required this.size,
-    required this.borderWidth,
-    this.image,
-    this.initials,
-  });
+  const _Avatar({required this.size, required this.borderWidth, this.image});
 
   final double size;
   final double borderWidth;
-  final ImageProvider? image;
-  final String? initials;
-
+  final String? image;
+  // final String? initials;
   @override
   Widget build(BuildContext context) {
     final borderColor = Colors.white.withValues(alpha: 0.35);
     final bgFallback = Colors.white.withValues(alpha: 0.15);
-    final label = (initials ?? 'U').trim().toUpperCase();
-    final display = label.isEmpty
-        ? 'U'
-        : (label.length > 2 ? label.substring(0, 2) : label);
-
-    final initialsStyle = Theme.of(context).textTheme.titleMedium?.copyWith(
-      color: Colors.white,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 0.2,
-    );
 
     return Container(
       width: size,
@@ -197,10 +184,18 @@ class _Avatar extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: image != null
-          ? Image(image: image!, fit: BoxFit.cover)
+          ? Image.network(image!, fit: BoxFit.cover)
           : ColoredBox(
               color: bgFallback,
-              child: Center(child: Text(display, style: initialsStyle)),
+              child: Center(
+                child: Text(
+                  'Y',
+                  style: TextStyle(
+                    fontSize: size / 3,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+              ),
             ),
     );
   }
