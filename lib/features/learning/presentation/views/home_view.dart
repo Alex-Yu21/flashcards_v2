@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-const double kPad = 20;
-const kPad20 = EdgeInsets.symmetric(horizontal: kPad);
+const double k20 = 20;
+const kPad20 = EdgeInsets.symmetric(horizontal: k20);
 
 const double kHeaderStackHeight = 250;
 const double kHeaderHeight = 180;
@@ -17,40 +17,16 @@ const double kHeaderTitleBottomGap = 32;
 
 const double kCardTopOffset = 120;
 const double kCardHeight = 132;
-const double kProgressBarHeight = 4;
 
-const double kLearningSectionRadius = 32;
-const double kLearningSectionElevation = 0;
-const double kDeckHeightFactor = 0.25;
-const double kDeckWidthFactor = 0.90;
+const double kAvatarSize = 60;
 
-const double kAvatarSize = 56;
-const double kAvatarBorderWidth = 2;
-
-class HomeView extends ConsumerWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(authControllerProvider);
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
-
-    final double avatarTop = (kCardTopOffset - kAvatarSize) / 1.5;
-
-    final titleStyle = theme.textTheme.headlineSmall?.copyWith(
-      color: cs.onPrimary,
-      fontWeight: FontWeight.bold,
-    );
-    final subtitleStyle = theme.textTheme.bodyLarge?.copyWith(
-      color: cs.onPrimary,
-    );
-    final metricLabelStyle = theme.textTheme.bodyMedium?.copyWith(
-      color: cs.onSurfaceVariant,
-    );
-    final metricValueStyle = theme.textTheme.headlineSmall?.copyWith(
-      fontWeight: FontWeight.bold,
-    );
 
     return Scaffold(
       backgroundColor: cs.surface,
@@ -61,98 +37,7 @@ class HomeView extends ConsumerWidget {
               height: kHeaderStackHeight,
               child: Stack(
                 clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: kHeaderHeight,
-                    color: theme.primaryColor,
-                  ),
-                  Positioned(
-                    top: avatarTop,
-                    left: kPad,
-                    child: _Avatar(
-                      size: kAvatarSize,
-                      borderWidth: kAvatarBorderWidth,
-                      image: session.photoUrl,
-                    ),
-                  ),
-                  Positioned(
-                    top: avatarTop,
-                    left: kPad + kAvatarSize,
-                    child: Padding(
-                      padding: kPad20,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            session.displayName != null
-                                ? 'Hi, ${session.displayName}'
-                                : 'Hi, student',
-                            style: titleStyle,
-                          ),
-                          const SizedBox(height: 4),
-                          Text("Let's start learning!", style: subtitleStyle),
-                          const SizedBox(height: kHeaderTitleBottomGap),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  Positioned(
-                    top: kCardTopOffset,
-                    left: kPad,
-                    right: kPad,
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: kCardHeight,
-                      child: Card(
-                        child: Padding(
-                          padding: kPad20,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Learned today',
-                                    style: metricLabelStyle,
-                                  ),
-                                  const Spacer(),
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                      minimumSize: Size.zero,
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: const Text('your deck'),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  Text('20 ', style: metricValueStyle),
-                                  Text('/ 50 cards', style: metricLabelStyle),
-                                ],
-                              ),
-                              Spacer(),
-                              Container(
-                                // TODO LinearProgressIndicator
-                                width: double.infinity,
-                                height: kProgressBarHeight,
-                                color: cs.onSurfaceVariant,
-                              ),
-                              const SizedBox(height: kPad),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                children: [_Header(), _LearnedTodayCard()],
               ),
             ),
             SizedBox(height: 32),
@@ -162,6 +47,67 @@ class HomeView extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Header extends ConsumerWidget {
+  const _Header({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final session = ref.watch(authControllerProvider);
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final cs = theme.colorScheme;
+
+    final double avatarTop = (kCardTopOffset - kAvatarSize) / 1.5;
+
+    final titleStyle = textTheme.headlineSmall?.copyWith(
+      color: cs.onPrimary,
+      fontWeight: FontWeight.bold,
+    );
+    final subtitleStyle = textTheme.bodyLarge?.copyWith(color: cs.onPrimary);
+
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: kHeaderHeight,
+          color: theme.primaryColor,
+        ),
+        Positioned(
+          top: avatarTop,
+          left: k20,
+          child: _Avatar(
+            size: kAvatarSize,
+            borderWidth: 2,
+            image: session.photoUrl,
+          ),
+        ),
+        Positioned(
+          top: avatarTop,
+          left: k20 + kAvatarSize,
+          child: Padding(
+            padding: kPad20,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  session.displayName != null
+                      ? 'Hi, ${session.displayName}'
+                      : 'Hi, student',
+                  style: titleStyle,
+                ),
+                const SizedBox(height: 4),
+                Text("Let's start learning!", style: subtitleStyle),
+                const SizedBox(height: kHeaderTitleBottomGap),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -204,6 +150,73 @@ class _Avatar extends StatelessWidget {
   }
 }
 
+class _LearnedTodayCard extends StatelessWidget {
+  const _LearnedTodayCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final textTheme = theme.textTheme;
+    final metricLabelStyle = textTheme.bodyMedium?.copyWith(
+      color: cs.onSurfaceVariant,
+    );
+    final metricValueStyle = textTheme.headlineSmall?.copyWith(
+      fontWeight: FontWeight.bold,
+    );
+
+    return Positioned(
+      top: kCardTopOffset,
+      left: k20,
+      right: k20,
+      child: SizedBox(
+        width: double.infinity,
+        height: kCardHeight,
+        child: Card(
+          child: Padding(
+            padding: kPad20,
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Text('Learned today', style: metricLabelStyle),
+                    const Spacer(),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      onPressed: () {},
+                      child: const Text('your deck'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Text('20 ', style: metricValueStyle),
+                    Text('/ 50 cards', style: metricLabelStyle),
+                  ],
+                ),
+                Spacer(),
+                Container(
+                  // TODO LinearProgressIndicator
+                  width: double.infinity,
+                  height: 4,
+                  color: cs.onSurfaceVariant,
+                ),
+                const SizedBox(height: k20),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _LearningSectionMock extends StatelessWidget {
   const _LearningSectionMock({super.key});
 
@@ -217,21 +230,18 @@ class _LearningSectionMock extends StatelessWidget {
       padding: kPad20,
       child: Card(
         margin: EdgeInsets.zero,
-        elevation: kLearningSectionElevation,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(kLearningSectionRadius),
-          ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Padding(padding: kPad20, child: DotStatusWidget()),
             Padding(
-              padding: const EdgeInsets.only(right: kPad),
+              padding: const EdgeInsets.only(right: k20),
               child: SizedBox(
-                height: h * kDeckHeightFactor,
-                width: w * kDeckWidthFactor,
+                height: h * 0.25,
+                width: w * 0.90,
                 child: StartLearningDeckWidget(
                   w: w,
                   onTap: () {
