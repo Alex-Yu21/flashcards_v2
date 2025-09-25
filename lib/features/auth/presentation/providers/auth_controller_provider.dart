@@ -33,6 +33,9 @@ class AuthController extends StateNotifier<Session> {
           status: AuthStatus.authenticated,
           uid: user.uid as String?,
           isAnonymous: (user.isAnonymous as bool?) ?? false,
+          displayName: user.displayName as String?,
+          photoUrl: user.photoURL as String?,
+          email: user.email as String?,
         );
       }
     });
@@ -47,3 +50,6 @@ class AuthController extends StateNotifier<Session> {
     super.dispose();
   }
 }
+
+// TODO(next): verify mapping — anonymous → unauthenticated(isAnonymous:true), normal login → authenticated
+// TODO(soon): add upgrade flow (linkWithCredential email/password, and linkWithProvider for Google)
