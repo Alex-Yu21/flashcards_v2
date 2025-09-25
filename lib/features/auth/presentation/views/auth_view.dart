@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashcards_v2/app/navigation/destinations.dart';
+import 'package:flashcards_v2/features/auth/presentation/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-final _firebase = FirebaseAuth.instance;
-
 // TODO sizes in a different fail?
-
-//TODO вынести логику из сетстейта логин/регистрация в роутер через redirect
 
 class Gaps {
   const Gaps._();
@@ -29,14 +27,14 @@ class FontSizes {
   static const double s32 = 32.0;
 }
 
-class AuthView extends StatefulWidget {
+class AuthView extends ConsumerStatefulWidget {
   const AuthView({super.key});
 
   @override
-  State<AuthView> createState() => _AuthViewState();
+  ConsumerState<AuthView> createState() => _AuthViewState();
 }
 
-class _AuthViewState extends State<AuthView> {
+class _AuthViewState extends ConsumerState<AuthView> {
   final _form = GlobalKey<FormState>();
 
   var _isLogin = false;
@@ -51,17 +49,18 @@ class _AuthViewState extends State<AuthView> {
 
     _form.currentState!.save();
 
+    final repo = ref.read(authRepositoryProvider);
+
     try {
       if (_isLogin) {
-        await _firebase.signInWithEmailAndPassword(
-          email: _enteredEmail,
-          password: _enteredPassword,
+        await repo.signInWithCredential(
+          EmailAuthProvider.credential(
+            email: _enteredEmail,
+            password: _enteredPassword,
+          ),
         );
       } else {
-        await _firebase.createUserWithEmailAndPassword(
-          email: _enteredEmail,
-          password: _enteredPassword,
-        );
+        await repo.signUpWithEmail(_enteredEmail, _enteredPassword);
       }
     } on FirebaseAuthException catch (error) {
       if (!mounted) return;
@@ -71,6 +70,8 @@ class _AuthViewState extends State<AuthView> {
       );
     }
   }
+
+  Future<void> _googleSignIn() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +83,11 @@ class _AuthViewState extends State<AuthView> {
           Padding(
             padding: Pads.appBarH24,
             child: TextButton(
-              onPressed: () {
+              onPressed: () async {
                 context.go(Routes.homeView);
+                await ref
+                    .read(authControllerProvider.notifier)
+                    .signInAnonymously();
               },
               child: Text(
                 'Skip >>',
@@ -291,9 +295,12 @@ class _AuthViewState extends State<AuthView> {
                   ),
                   Gaps.v24,
                   Center(
-                    child: SizedBox(
-                      width: 34,
-                      child: Image.asset('assets/google_icon.png'),
+                    child: GestureDetector(
+                      onTap: _googleSignIn,
+                      child: SizedBox(
+                        width: 34,
+                        child: Image.asset('assets/google_icon.png'),
+                      ),
                     ),
                   ),
                 ],
@@ -305,3 +312,6 @@ class _AuthViewState extends State<AuthView> {
     );
   }
 }
+
+// TODO(next): call signInAnonymously() then context.go(Routes.homeView)
+// ref.read(authControllerProvider.notifier).signInAnonymously();

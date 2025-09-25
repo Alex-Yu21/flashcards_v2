@@ -21,15 +21,32 @@ class FirebaseAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<void> signUpWithEmail(String email, String password) async {
+    await _fa.createUserWithEmailAndPassword(email: email, password: password);
+  }
+
+  @override
+  Future<void> signInWithCredential(AuthCredential credential) async {
+    await _fa.signInWithCredential(credential);
+  }
+
+  @override
   Future<void> signInAnonymously() async {
     await _fa.signInAnonymously();
   }
 
   @override
-  Future<void> signOut() => _fa.signOut();
+  Future<void> linkWithCredential(AuthCredential credential) async {
+    final user = _fa.currentUser;
+    if (user == null) {
+      throw FirebaseAuthException(
+        code: 'no-current-user',
+        message: 'User is not sign in',
+      );
+    }
+    await user.linkWithCredential(credential);
+  }
 
-  // TODO  linkWithCredential
   @override
-  Future<void> linkWithCredential(Object credential) =>
-      Future.error(UnimplementedError('in progress'));
+  Future<void> signOut() => _fa.signOut();
 }
