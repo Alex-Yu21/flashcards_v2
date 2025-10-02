@@ -32,8 +32,8 @@ final class LanguageCardEntity extends FlashcardEntity {
   final String? example;
 }
 
-final class CodeCardEntity extends FlashcardEntity {
-  CodeCardEntity({
+final class StudyCardEntity extends FlashcardEntity {
+  StudyCardEntity({
     required super.id,
     required super.title,
     super.category = CardCategory.newWords,
@@ -52,3 +52,4 @@ final class CodeCardEntity extends FlashcardEntity {
 
 //TODO добавить sealed, когда добавится третий-четвёртый подтип или понадобится строгий switch
 // TODO Equatable, когда начнутся проблемы с сравнениями/перерисовками. сравнивать по айди и так можно но наверно лучше перестраховаться
+// TODO опциональные поля для общего типа код. изображение, рисунок,
