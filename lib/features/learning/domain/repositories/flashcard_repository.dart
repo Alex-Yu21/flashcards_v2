@@ -1,4 +1,4 @@
-import 'package:flashcards_v2/features/learning/domain/entities/flashcarde.dart';
+import 'package:flashcards_v2/features/learning/domain/entities/flashcard.dart';
 
 abstract class FlashcardRepository {
   Future<List<FlashcardEntity>> fetchAllFlashcards();
