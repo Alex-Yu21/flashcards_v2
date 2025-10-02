@@ -1,0 +1,132 @@
+{
+    "id": "g_g",
+    "name": "Thank you for being a friend!",
+    "cards": [
+        {
+            "title": "devastatingly",
+            "transcription": "[ˈdɛvəˌsteɪtɪŋli]",
+            "translation": "extremely destructive",
+            "example": "Well, nobody ever believes me when I'm telling the truth. I guess it's the curse of every devastatingly beautiful woman.",
+            "description": "In a way that causes great damage or severe emotional impact; intensely."
+        },
+        {
+            "title": "heritage",
+            "transcription": "[ˈhɛrɪtɪdʒ]",
+            "translation": "inherited tradition",
+            "example": "Flirting is part of my heritage.",
+            "description": "Property, traditions, or features passed down from previous generations; cultural inheritance."
+        },
+        {
+            "title": "expulsion",
+            "transcription": "[ɪkˈspʌlʃən]",
+            "translation": "forcing out",
+            "example": "We're sorry, Dorothy, but the bylaws clearly state that any derogatory remarks about the King are grounds for immediate expulsion.",
+            "description": "The act of officially forcing someone to leave a place, organization, or country."
+        },
+        {
+            "title": "phony",
+            "transcription": "[ˈfoʊni]",
+            "translation": "fake; not genuine",
+            "example": "That phony hair color won't wash out just because you got caught in the rain!",
+            "description": "Not real or true; intended to deceive; also, a person who is insincere."
+        },
+        {
+            "title": "pondering",
+            "transcription": "[ˈpɒndərɪŋ]",
+            "translation": "deep thinking",
+            "example": "People waste their time pondering whether a glass is half empty or half full. Me, I just drink whatever's in the glass.",
+            "description": "The act of thinking about something carefully, especially before making a decision."
+        },
+        {
+            "title": "disguises",
+            "transcription": "[dɪsˈɡaɪzɪz]",
+            "translation": "concealing clothes",
+            "example": "Why do blessings wear disguises? If I were a blessing, I'd run around naked.",
+            "description": "Things that alter appearance to hide identity; also, the act of concealing the true nature of something."
+        },
+        {
+            "title": "herring",
+            "transcription": "[ˈhɛrɪŋ]",
+            "translation": "a small fish",
+            "example": "You know what they say: You can lead a herring to water, but you have to walk really fast or he'll die.",
+            "description": "A silvery, oily fish found in northern seas; often eaten salted or smoked."
+        },
+        {
+            "title": "revered",
+            "transcription": "[rɪˈvɪrd]",
+            "translation": "deeply respected",
+            "example": "We not only took care of our old people, we revered them, honored them, put them on a pedestal. 'Course, that's how we got to be the broken hip capital of the Midwest.",
+            "description": "Regarded with great respect and admiration."
+        },
+        {
+            "title": "wretched",
+            "transcription": "[ˈrɛtʃɪd]",
+            "translation": "miserable; very bad",
+            "example": "When a person dies, you go to their funeral to show the man upstairs you have respect for human life, no matter how wretched it was. Any idiot knows that.",
+            "description": "In a very unhappy or unfortunate state; of poor quality; despicable."
+        },
+        {
+            "title": "sag",
+            "transcription": "[sæɡ]",
+            "translation": "droop downward",
+            "example": "No matter how bad things get, remember these sage words: You're old, you sag, get over it.",
+            "description": "To sink, bend, or droop from weight or lack of strength."
+        },
+        {
+            "title": "dentures",
+            "transcription": "[ˈdɛntʃərz]",
+            "translation": "false teeth",
+            "example": "May you put your dentures in upside down and chew your head off.",
+            "description": "A removable plate or frame holding artificial teeth."
+        },
+        {
+            "title": "toupee",
+            "transcription": "[tuːˈpeɪ]",
+            "translation": "men's hairpiece",
+            "example": "\"Sophia, you're looking younger every day.\" — \"Hi, Stan, and that's a beautiful toupee you're wearing. Great, now we're both liars.\"",
+            "description": "A small wig or hairpiece worn to cover a bald spot."
+        },
+        {
+            "title": "herring (war)",
+            "transcription": "[ˈhɛrɪŋ wɔːr]",
+            "translation": "feud over herring",
+            "example": "Blanche: \"The Great Herring War?\" — Rose: \"Between the Lindstroms and the Johannsens.\" — Dorothy: \"Oh, that Great Herring War.\"",
+            "description": "A humorous phrase referring to a family dispute about herring (from the show); not a standard dictionary term."
+        },
+        {
+            "title": "cagey",
+            "transcription": "[ˈkeɪdʒi]",
+            "translation": "guarded; cautious",
+            "example": "Can you believe it? After four long years, my baby girl is finally coming to see me. I'm so happy, I could cry. — But Blanche, you are crying! — Admit it, Rose, you worked for Allied Intelligence during World War II. — Huh? — Fine. Play it cagey.",
+            "description": "Reluctant to share information; cleverly evasive or cautious."
+        },
+        {
+            "title": "titillating",
+            "transcription": "[ˈtɪtɪleɪtɪŋ]",
+            "translation": "arousing; exciting",
+            "example": "How does it feel to have your butt whipped? — Well, sometimes I find it strangely titillating, but... oh. You were talking to her.",
+            "description": "Stimulating mild excitement or interest, often of a sexual nature."
+        },
+        {
+            "title": "derogatory",
+            "transcription": "[dɪˈrɒɡətəri]",
+            "translation": "insulting; demeaning",
+            "example": "Any derogatory remarks about the King are grounds for immediate expulsion.",
+            "description": "Expressing a low opinion; showing a lack of respect or demeaning someone."
+        },
+        {
+            "title": "harlot",
+            "transcription": "[ˈhɑːrlət]",
+            "translation": "prostitute (offensive)",
+            "example": "You—you harlot!",
+            "description": "An archaic and offensive term for a promiscuous woman or a prostitute."
+        },
+        {
+            "title": "bayou",
+            "transcription": "[ˈbaɪuː]",
+            "translation": "marshy outlet",
+            "example": "They'll find me in a little shack in the Louisiana bayou.",
+            "description": "A slow-moving, marshy waterway common in the southern United States, especially Louisiana."
+        }
+    ]
+}
