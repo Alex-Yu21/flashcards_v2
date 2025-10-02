@@ -1,8 +1,8 @@
 import 'package:flashcards_v2/features/learning/domain/entities/flashcarde.dart';
 import 'package:flutter/material.dart';
 
-class FlashcardWidget extends StatelessWidget {
-  const FlashcardWidget({
+class LanguageFlashcardWidget extends StatelessWidget {
+  const LanguageFlashcardWidget({
     super.key,
     required this.flashcard,
     this.isTurned = false,
@@ -10,7 +10,7 @@ class FlashcardWidget extends StatelessWidget {
     this.textColor,
   });
 
-  final FlashcardEntity flashcard;
+  final LanguageCardEntity flashcard;
   final bool isTurned;
   final Color? color;
   final Color? textColor;

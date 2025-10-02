@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flashcards_v2/features/learning/domain/entities/flashcarde.dart';
@@ -8,9 +7,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
 class _K {
   static const double stackHeight = 180;
-  static const double blurSigma = 3;
-  static const int cardsOnScreen = 3;
-  static const int cardsPreviewCount = 3;
+  static const double blurSigma = 2;
   static const Offset backCardOffset = Offset(30, -20);
 
   static const double buttonWidthRatio = 0.72;
@@ -30,24 +27,15 @@ class StartLearningDeckWidget extends StatelessWidget {
     super.key,
     required this.w,
     required this.onTap,
-    required this.cards,
-    this.isLoading = false,
-    this.errorText,
-    this.placeholder,
   });
 
   final double w;
   final VoidCallback onTap;
-  final List<FlashcardEntity> cards;
-  final bool isLoading;
-  final String? errorText;
-  final Widget? placeholder;
 
   @override
   Widget build(BuildContext context) {
-    final preview = dummyFlashcards;
-    final hasPreview = preview.isNotEmpty && !isLoading;
-    final previewCount = math.min(preview.length, _K.cardsPreviewCount);
+    final preview = mockFlashcards;
+    final previewCount = 3;
 
     final targetWidth = (w * _K.buttonWidthRatio).clamp(
       _K.buttonMinWidth,
@@ -59,25 +47,21 @@ class StartLearningDeckWidget extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          if (isLoading) const Center(child: CircularProgressIndicator()),
-          if (hasPreview)
-            ImageFiltered(
-              imageFilter: ImageFilter.blur(
-                sigmaX: _K.blurSigma,
-                sigmaY: _K.blurSigma,
-              ),
-              child: CardSwiper(
-                isDisabled: true,
-                numberOfCardsDisplayed: _K.cardsOnScreen,
-                backCardOffset: _K.backCardOffset,
-                cardsCount: previewCount,
-                cardBuilder: (context, index, _, __) =>
-                    FlashcardWidget(flashcard: preview[index]),
-                padding: EdgeInsets.zero,
-              ),
+          ImageFiltered(
+            imageFilter: ImageFilter.blur(
+              sigmaX: _K.blurSigma,
+              sigmaY: _K.blurSigma,
             ),
-          if (!hasPreview && !isLoading && placeholder != null)
-            Center(child: placeholder!),
+            child: CardSwiper(
+              isDisabled: true,
+              numberOfCardsDisplayed: previewCount,
+              backCardOffset: _K.backCardOffset,
+              cardsCount: previewCount,
+              cardBuilder: (context, index, _, __) =>
+                  LanguageFlashcardWidget(flashcard: preview[0]),
+              padding: EdgeInsets.zero,
+            ),
+          ),
           Center(
             child: SizedBox(
               width: targetWidth,
@@ -120,114 +104,20 @@ class StartLearningDeckWidget extends StatelessWidget {
               ),
             ),
           ),
-          if (errorText != null && errorText!.isNotEmpty)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  errorText!,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-                ),
-              ),
-            ),
         ],
       ),
     );
   }
 }
 
-final List<FlashcardEntity> dummyFlashcards = [
-  FlashcardEntity(
-    id: '1',
-    title: 'cane',
-    transcription: '[ˈka.ne]',
+final List<LanguageCardEntity> mockFlashcards = [
+  LanguageCardEntity(
+    id: 'mock_preview_1',
+    title: 'nice to see you',
+    transcription: '[welcome back]',
     audioPath: null,
-    description: 'животное',
-    translation: 'собака',
-    example: 'Il cane corre nel parco.',
-  ),
-  FlashcardEntity(
-    id: '2',
-    title: 'gatto',
-    transcription: '[ˈɡat.to]',
-    audioPath: null,
-    description: 'животное',
-    translation: 'кот',
-    example: 'Il gatto dorme sul divano.',
-  ),
-  FlashcardEntity(
-    id: '3',
-    title: 'casa',
-    transcription: '[ˈka.sa]',
-    audioPath: null,
-    description: 'место, где ты живёшь',
-    translation: 'дом',
-    example: 'La mia casa è grande e luminosa.',
-  ),
-  FlashcardEntity(
-    id: '4',
-    title: 'libro',
-    transcription: '[ˈli.bro]',
-    audioPath: null,
-    description: 'читаешь это',
-    translation: 'книга',
-    example: 'Sto leggendo un libro interessante.',
-  ),
-  FlashcardEntity(
-    id: '5',
-    title: 'amico',
-    transcription: '[aˈmi.ko]',
-    audioPath: null,
-    description: 'человек, которому доверяешь',
-    translation: 'друг',
-    example: 'Il mio amico vive a Roma.',
-  ),
-  FlashcardEntity(
-    id: '6',
-    title: 'mela',
-    transcription: '[ˈme.la]',
-    audioPath: null,
-    description: 'красный фрукт',
-    translation: 'яблоко',
-    example: 'Mangio una mela ogni giorno.',
-  ),
-  FlashcardEntity(
-    id: '7',
-    title: 'scuola',
-    transcription: '[ˈskwo.la]',
-    audioPath: null,
-    description: 'место учёбы',
-    translation: 'школа',
-    example: 'I bambini vanno a scuola ogni mattina.',
-  ),
-  FlashcardEntity(
-    id: '8',
-    title: 'sole',
-    transcription: '[ˈso.le]',
-    audioPath: null,
-    description: 'на небе днём',
-    translation: 'солнце',
-    example: 'Il sole splende alto nel cielo.',
-  ),
-  FlashcardEntity(
-    id: '9',
-    title: 'acqua',
-    transcription: '[ˈak.kwa]',
-    audioPath: null,
-    description: 'пьёшь это',
-    translation: 'вода',
-    example: 'Bevo molta acqua durante il giorno.',
-  ),
-  FlashcardEntity(
-    id: '10',
-    title: 'tempo',
-    transcription: '[ˈtɛm.po]',
-    audioPath: null,
-    description: 'идёт всегда',
-    translation: 'время / погода (по контексту)',
-    example: 'Non ho molto tempo libero.',
+    description: 'goof luck with your study session',
+    translation: 'piacere di vederti',
+    example: 'See you later! Nice to see you again!',
   ),
 ];

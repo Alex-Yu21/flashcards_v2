@@ -1,6 +1,5 @@
 import 'package:flashcards_v2/app/navigation/destinations.dart';
 import 'package:flashcards_v2/features/auth/presentation/providers/auth_providers.dart';
-import 'package:flashcards_v2/features/learning/domain/entities/flashcarde.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/dot_status_widget.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/start_learning_deck_widget.dart';
 import 'package:flashcards_v2/features/learning/presentation/widgets/streak_widget.dart';
@@ -247,7 +246,6 @@ class _LearningSectionMock extends StatelessWidget {
                   onTap: () {
                     context.go('${Routes.homeView}/${Routes.learningView}');
                   },
-                  cards: const <FlashcardEntity>[],
                 ),
               ),
             ),
