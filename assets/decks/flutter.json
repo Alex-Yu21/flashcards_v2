@@ -1,0 +1,146 @@
+{
+    "id": "flutter",
+    "name": "Code with Flutter!",
+    "cards": [
+        {
+            "title": "Compose a product card with Row/Column/Stack",
+            "answerType": "procedure",
+            "hint": "Layout\nPadding\nText overflow\nResponsiveness",
+            "answer": "1) Skeleton: Card → Padding → Column.\n2) Top: Row with image and Expanded text.\n3) Bottom: Row (price + button) with spaceBetween.\n4) Limit long text via maxLines + overflow.\n5) Use LayoutBuilder/MediaQuery for sizing.",
+            "example": "Card(\n  child: Padding(\n    padding: EdgeInsets.all(12),\n    child: Column(children: [\n      Row(children: [\n        ClipRRect(\n          borderRadius: BorderRadius.circular(8),\n          child: Image.network(url, width: 64, height: 64, fit: BoxFit.cover),\n        ),\n        SizedBox(width: 12),\n        Expanded(child: Text(name, maxLines: 2, overflow: TextOverflow.ellipsis))\n      ]),\n      SizedBox(height: 8),\n      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [\n        Text(\"$9.99\"),\n        ElevatedButton(onPressed: () {}, child: Text(\"Buy\"))\n      ])\n    ]),\n  ),\n);"
+        },
+        {
+            "title": "Make layout adapt for small/large screens",
+            "answerType": "algorithm",
+            "hint": "MediaQuery\nFlexible/Expanded\nScroll\nSafeArea",
+            "answer": "1) Read sizes via MediaQuery.\n2) Prefer Flexible/Expanded over fixed widths.\n3) Switch one/two columns by width.\n4) Wrap long content in SingleChildScrollView.\n5) Respect SafeArea.",
+            "example": "final w = MediaQuery.of(context).size.width;\nreturn SafeArea(child: w < 600 ? oneColumn() : twoColumns());"
+        },
+        {
+            "title": "ListView.builder with custom item and separators",
+            "answerType": "procedure",
+            "hint": "builder\nseparator\nlazy",
+            "answer": "1) Use ListView.separated.\n2) Provide itemBuilder.\n3) Provide separatorBuilder (Divider/SizedBox).\n4) Set itemCount.\n5) Avoid unnecessary nested scrolls.",
+            "example": "ListView.separated(\n  itemCount: items.length,\n  itemBuilder: (_, i) => ListTile(title: Text(items[i])),\n  separatorBuilder: (_, __) => Divider(),\n);"
+        },
+        {
+            "title": "Pull-to-refresh with RefreshIndicator",
+            "answerType": "procedure",
+            "hint": "RefreshIndicator\nonRefresh async\nupdate state",
+            "answer": "1) Wrap the list with RefreshIndicator.\n2) Implement onRefresh (async).\n3) Reload data.\n4) Update state.\n5) Handle errors.",
+            "example": "RefreshIndicator(\n  onRefresh: () async { await vm.reload(); },\n  child: ListView.builder(\n    itemCount: vm.items.length,\n    itemBuilder: (_, i) => Text(vm.items[i]),\n  ),\n);"
+        },
+        {
+            "title": "Form with validation",
+            "answerType": "procedure",
+            "hint": "GlobalKey<FormState>\nvalidator\nsubmit",
+            "answer": "1) Create a GlobalKey<FormState>.\n2) Wrap fields with Form.\n3) Add validator to TextFormField.\n4) On submit call validate().\n5) On success, save/submit.",
+            "example": "final key = GlobalKey<FormState>();\nForm(\n  key: key,\n  child: Column(children: [\n    TextFormField(validator: (v) => v == null || v.isEmpty ? 'Required' : null),\n    ElevatedButton(\n      onPressed: () {\n        if (key.currentState!.validate()) { /* submit */ }\n      },\n      child: Text('Save'),\n    )\n  ]),\n);"
+        },
+        {
+            "title": "Theme switcher (Light/Dark) with persistence",
+            "answerType": "algorithm",
+            "hint": "theme/darkTheme/themeMode\ncontroller\nsave/load",
+            "answer": "1) Define lightTheme and darkTheme.\n2) In MaterialApp set theme/darkTheme and control themeMode.\n3) Create a controller holding ThemeMode.\n4) On app start, load saved mode.\n5) On toggle, update mode and persist.",
+            "example": "MaterialApp(\n  theme: light,\n  darkTheme: dark,\n  themeMode: controller.mode,\n);\n// controller.toggle();"
+        },
+        {
+            "title": "Navigation with parameters",
+            "answerType": "procedure",
+            "hint": "Navigator.push\nMaterialPageRoute\npass argument",
+            "answer": "1) Create Details screen with an argument.\n2) Use Navigator.push with MaterialPageRoute.\n3) Pass the parameter in the constructor.\n4) Read it in build.\n5) Optionally return a result on pop.",
+            "example": "Navigator.push(\n  context,\n  MaterialPageRoute(builder: (_) => Details(item: item)),\n);"
+        },
+        {
+            "title": "BottomNavigationBar with state preservation",
+            "answerType": "algorithm",
+            "hint": "currentIndex\nIndexedStack\ndo not recreate controllers",
+            "answer": "1) Keep currentIndex in State.\n2) Use IndexedStack for child screens.\n3) Update index via setState in onTap.\n4) Do not recreate controllers in build.\n5) Use keys if needed.",
+            "example": "IndexedStack(index: _i, children: [Home(), Search(), Profile()]);\nBottomNavigationBar(currentIndex: _i, onTap: (i) => setState(() => _i = i));"
+        },
+        {
+            "title": "Local state with StatefulWidget and setState",
+            "answerType": "concept",
+            "hint": "initState\nsetState\ndispose\nmounted",
+            "answer": "Keep screen-local data in State.\nInitialize in initState, update via setState, dispose resources in dispose.\nCheck mounted in async callbacks.",
+            "example": "class C extends State<MyW> {\n  int c = 0;\n  @override\n  Widget build(_) => IconButton(\n    onPressed: () => setState(() => c++),\n    icon: Text('$c'),\n  );\n}"
+        },
+        {
+            "title": "Controllers lifecycle (TextEditingController, AnimationController)",
+            "answerType": "procedure",
+            "hint": "create in State\nuse\ndispose",
+            "answer": "1) Create controller in State.\n2) Bind it to fields/widgets.\n3) Add listeners if needed.\n4) Remove listeners and call dispose in dispose.\n5) Do not keep controllers in Stateless.",
+            "example": "late final tc = TextEditingController();\n@override\nvoid dispose() { tc.dispose(); super.dispose(); }"
+        },
+        {
+            "title": "Implicit animations (AnimatedContainer/Opacity/Switcher)",
+            "answerType": "procedure",
+            "hint": "duration\ncurve\nkeys when child changes",
+            "answer": "1) Replace Container with AnimatedContainer.\n2) Provide duration and curve.\n3) Changing props triggers animation.\n4) For child changes use AnimatedSwitcher with keys.\n5) Avoid animating very heavy trees.",
+            "example": "AnimatedContainer(\n  duration: kThemeChangeDuration,\n  width: w,\n  height: h,\n);"
+        },
+        {
+            "title": "Explicit animation with AnimationController",
+            "answerType": "algorithm",
+            "hint": "TickerProvider\ncontroller\nTween\nAnimatedBuilder\ndispose",
+            "answer": "1) Add SingleTickerProviderStateMixin.\n2) Create AnimationController.\n3) Wrap with Tween/CurvedAnimation.\n4) Render via AnimatedBuilder.\n5) Stop and dispose at the end.",
+            "example": "final c = AnimationController(vsync: this, duration: Duration(milliseconds: 300));\nfinal a = Tween(begin: 0.0, end: 1.0).animate(c);"
+        },
+        {
+            "title": "Fetch JSON and show with FutureBuilder",
+            "answerType": "procedure",
+            "hint": "async fetch\nloading\nerror\ndata → list",
+            "answer": "1) Write fetch() async.\n2) Use FutureBuilder for that future.\n3) Show a loader while waiting.\n4) Show error on hasError.\n5) Render the list on data.",
+            "example": "FutureBuilder<List<Item>>(\n  future: fetch(),\n  builder: (_, s) {\n    if (s.connectionState != ConnectionState.done) return CircularProgressIndicator();\n    if (s.hasError) return Text('Error');\n    final data = s.data ?? [];\n    return ListView.builder(\n      itemCount: data.length,\n      itemBuilder: (_, i) => Text(data[i].name),\n    );\n  },\n);"
+        },
+        {
+            "title": "StreamBuilder for realtime updates",
+            "answerType": "procedure",
+            "hint": "stream\ninitialData\nloading/empty/error",
+            "answer": "1) Provide a Stream to StreamBuilder.\n2) Handle waiting/error/empty.\n3) Update UI on every event.\n4) Minimize heavy rebuilds.\n5) Unsubscribe is automatic via StreamBuilder lifecycle.",
+            "example": "StreamBuilder<int>(\n  stream: counterStream,\n  builder: (_, s) => Text('${s.data ?? 0}'),\n);"
+        },
+        {
+            "title": "Image.network with placeholder and clipping",
+            "answerType": "procedure",
+            "hint": "loadingBuilder\nerrorBuilder\nClipRRect",
+            "answer": "1) Use Image.network.\n2) Add loadingBuilder and errorBuilder.\n3) Wrap with ClipRRect for rounded corners.\n4) Set fit.\n5) Uses ImageCache by default.",
+            "example": "ClipRRect(\n  borderRadius: BorderRadius.circular(8),\n  child: Image.network(\n    url,\n    fit: BoxFit.cover,\n    loadingBuilder: (_, c, pr) => pr == null ? c : CircularProgressIndicator(),\n    errorBuilder: (_, __, ___) => Icon(Icons.broken_image),\n  ),\n);"
+        },
+        {
+            "title": "Button loading state and disabled state",
+            "answerType": "algorithm",
+            "hint": "bool isLoading\nonPressed null\ninline progress",
+            "answer": "1) Keep isLoading.\n2) Show a progress indicator inside the button while loading.\n3) Temporarily set onPressed = null or guard.\n4) Handle errors.\n5) Restore normal state.",
+            "example": "ElevatedButton(\n  onPressed: isLoading ? null : submit,\n  child: isLoading\n      ? SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))\n      : Text('Save'),\n);"
+        },
+        {
+            "title": "Keys in Flutter: when and why",
+            "answerType": "concept",
+            "hint": "Element identity\nAnimatedSwitcher/Lists\nValueKey",
+            "answer": "Keys control element matching in the tree: they preserve state and animate child replacement correctly.\nUse ValueKey for stable identifiers in lists and with AnimatedSwitcher.",
+            "example": "AnimatedSwitcher(\n  duration: kThemeChangeDuration,\n  child: Text('$count', key: ValueKey(count)),\n);"
+        },
+        {
+            "title": "Render optimization in UI",
+            "answerType": "concept",
+            "hint": "const constructors\nextract subtrees\nRepaintBoundary",
+            "answer": "Use const where possible.\nExtract heavy subtrees into separate widgets.\nApply RepaintBoundary to isolate frequent repaints.\nAvoid unnecessary setState.",
+            "example": "const Text('Static');\nRepaintBoundary(child: ChartWidget(data: d));"
+        },
+        {
+            "title": "Separate UI widget and domain model",
+            "answerType": "concept",
+            "hint": "widget = presentation\nentity/DTO = data\nno business logic in UI",
+            "answer": "Widgets accept simple data/models and handle presentation only.\nBusiness rules, mapping, and validation live in domain/application layers.",
+            "example": "class ProductTile extends StatelessWidget {\n  final ProductView vm;\n  const ProductTile(this.vm, {super.key});\n  @override\n  Widget build(_) => ListTile(title: Text(vm.title));\n}"
+        },
+        {
+            "title": "Small UI algorithm: price formatting",
+            "answerType": "algorithm",
+            "hint": "intl/NumberFormat\nlocale\ncurrency\nedge cases",
+            "answer": "1) Add intl.\n2) Create NumberFormat.currency with the target locale.\n3) Format the price.\n4) Handle null/0.\n5) Test edge values.",
+            "example": "final f = NumberFormat.currency(locale: 'en_US', symbol: '\\$');\nfinal s = f.format(9.9);"
+        }
+    ]
+}
