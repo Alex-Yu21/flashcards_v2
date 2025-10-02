@@ -4,6 +4,7 @@ import 'package:flashcards_v2/features/auth/domain/entities/auth_status.dart';
 import 'package:flashcards_v2/features/auth/domain/entities/session.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/auth_view.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/load_view.dart';
+import 'package:flashcards_v2/features/learning/presentation/views/collections_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/home_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/learning_view.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +76,7 @@ GoRouter createRouter({
                 routes: [
                   GoRoute(
                     path: Routes.learningView,
+                    parentNavigatorKey: rootNavigatorKey,
                     builder: (context, state) => const LearningView(),
                   ),
                 ],
@@ -121,15 +123,6 @@ class CategoriesView extends StatelessWidget {
   }
 }
 
-class CollectionsView extends StatelessWidget {
-  const CollectionsView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('CollectionsView'));
-  }
-}
-
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
@@ -139,5 +132,4 @@ class ProfileView extends StatelessWidget {
   }
 }
 
-// TODO(next): AuthView → implement “Skip” flow to create anonymous user before go('/home')
 // TODO(next): Add deep-link cases and ensure guest can open them directly
