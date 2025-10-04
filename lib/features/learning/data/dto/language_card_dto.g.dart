@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'language_deck_dto.dart';
+part of 'language_card_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

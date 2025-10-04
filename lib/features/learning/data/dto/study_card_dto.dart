@@ -2,7 +2,7 @@ import 'package:flashcards_v2/features/learning/domain/entities/card_category.da
 import 'package:flashcards_v2/features/learning/domain/entities/flashcard.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'study_deck_dto.g.dart';
+part 'study_card_dto.g.dart';
 
 @JsonSerializable()
 class StudyCardDto {

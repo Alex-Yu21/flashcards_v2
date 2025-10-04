@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'study_deck_dto.dart';
+part of 'study_card_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
