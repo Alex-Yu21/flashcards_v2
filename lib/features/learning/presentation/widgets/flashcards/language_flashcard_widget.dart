@@ -1,4 +1,4 @@
-import 'package:flashcards_v2/features/learning/domain/entities/flashcarde.dart';
+import 'package:flashcards_v2/features/learning/domain/entities/flashcard.dart';
 import 'package:flutter/material.dart';
 
 class LanguageFlashcardWidget extends StatelessWidget {

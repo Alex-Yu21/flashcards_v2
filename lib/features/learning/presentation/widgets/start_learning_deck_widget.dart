@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:flashcards_v2/features/learning/domain/entities/flashcarde.dart';
-import 'package:flashcards_v2/features/learning/presentation/widgets/flashcard_widget.dart';
+import 'package:flashcards_v2/features/learning/domain/entities/flashcard.dart';
+import 'package:flashcards_v2/features/learning/presentation/widgets/flashcards/language_flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
