@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashcards_v2/app/di/secrets.dart';
 import 'package:flashcards_v2/app/navigation/destinations.dart';
@@ -68,6 +69,20 @@ class _AuthViewState extends ConsumerState<AuthView> {
       } else {
         await repo.signUpWithEmail(_enteredEmail, _enteredPassword);
       }
+
+      try {
+        final uid = FirebaseAuth.instance.currentUser!.uid;
+
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'email': _enteredEmail,
+        });
+      } on FirebaseException catch (e, st) {
+        debugPrint('Firestore error: ${e.code} ${e.message}\n$st');
+        if (!mounted) return;
+        ScaffoldMessenger.of(context)
+          ..clearSnackBars()
+          ..showSnackBar(SnackBar(content: Text('Firestore: ${e.code}')));
+      }
     } on FirebaseAuthException catch (error) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -83,6 +98,7 @@ class _AuthViewState extends ConsumerState<AuthView> {
       // clientId: '<iOS client id>'    TODO: iOS
     );
     await GoogleSignIn.instance.authenticate();
+    //TODO пользователь отменил вход
 
     final signInEvent =
         await GoogleSignIn.instance.authenticationEvents.firstWhere(
@@ -98,6 +114,16 @@ class _AuthViewState extends ConsumerState<AuthView> {
         .signInWithCredential(
           GoogleAuthProvider.credential(idToken: googleAuth.idToken),
         );
+
+    // TODO ошибки файрсторе
+
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'username': user.displayName,
+      'email': user.email,
+      'image_url': user.photoUrl,
+    });
   }
 
   @override
