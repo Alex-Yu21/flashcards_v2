@@ -7,6 +7,7 @@ import 'package:flashcards_v2/features/auth/presentation/views/load_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/collections_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/home_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/learning_view.dart';
+import 'package:flashcards_v2/features/learning/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -120,15 +121,6 @@ class CategoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(child: Text('CategoriesView'));
-  }
-}
-
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('ProfileView'));
   }
 }
 
