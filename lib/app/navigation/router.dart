@@ -4,6 +4,7 @@ import 'package:flashcards_v2/features/auth/domain/entities/auth_status.dart';
 import 'package:flashcards_v2/features/auth/domain/entities/session.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/auth_view.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/load_view.dart';
+import 'package:flashcards_v2/features/learning/presentation/views/categoties_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/collections_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/home_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/learning_view.dart';
@@ -112,16 +113,6 @@ GoRouter createRouter({
       ),
     ],
   );
-}
-// TODO: real screens
-
-class CategoriesView extends StatelessWidget {
-  const CategoriesView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('CategoriesView'));
-  }
 }
 
 // TODO(next): Add deep-link cases and ensure guest can open them directly
