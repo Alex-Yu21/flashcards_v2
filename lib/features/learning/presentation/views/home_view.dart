@@ -27,24 +27,21 @@ class HomeView extends StatelessWidget {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
 
-    return Scaffold(
-      backgroundColor: cs.surface,
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: kHeaderStackHeight,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [_Header(), _LearnedTodayCard()],
-              ),
+    return SafeArea(
+      child: Column(
+        children: [
+          SizedBox(
+            height: kHeaderStackHeight,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [_Header(), _LearnedTodayCard()],
             ),
-            SizedBox(height: 32),
-            const Padding(padding: kPad20, child: StreakWidget()),
-            Spacer(),
-            const _LearningSectionMock(),
-          ],
-        ),
+          ),
+          SizedBox(height: 32),
+          const Padding(padding: kPad20, child: StreakWidget()),
+          Spacer(),
+          const _LearningSectionMock(),
+        ],
       ),
     );
   }
@@ -188,7 +185,7 @@ class _LearnedTodayCard extends StatelessWidget {
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
                       onPressed: () {},
-                      child: const Text('your deck'),
+                      child: const Text('your decks'),
                     ),
                   ],
                 ),
