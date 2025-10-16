@@ -23,6 +23,7 @@ class Routes {
   static const String categoriesView = '/categories';
   static const String collectionsView = '/collections';
   static const String profileView = '/profile';
+  static const String createCardView = '/createCard';
 
   static const String learningView = 'learning';
 }

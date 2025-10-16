@@ -14,11 +14,20 @@ class LayoutScaffold extends StatelessWidget {
 
     return Scaffold(
       body: navigationShell,
-
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push(Routes.createCardView);
+        },
+        backgroundColor: cs.primary,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, size: 32, color: cs.onPrimary),
+      ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           backgroundColor: cs.surface,
           indicatorColor: cs.primary,
+
           iconTheme: WidgetStateProperty.resolveWith((states) {
             final selected = states.contains(WidgetState.selected);
             return IconThemeData(
@@ -30,6 +39,7 @@ class LayoutScaffold extends StatelessWidget {
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           selectedIndex: navigationShell.currentIndex,
           onDestinationSelected: navigationShell.goBranch,
+
           destinations: [
             for (final d in destinations)
               NavigationDestination(icon: Icon(d.icon), label: d.label),

@@ -6,6 +6,7 @@ import 'package:flashcards_v2/features/auth/presentation/views/auth_view.dart';
 import 'package:flashcards_v2/features/auth/presentation/views/load_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/categoties_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/collections_view.dart';
+import 'package:flashcards_v2/features/learning/presentation/views/create_card_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/home_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/learning_view.dart';
 import 'package:flashcards_v2/features/learning/presentation/views/profile_view.dart';
@@ -63,6 +64,11 @@ GoRouter createRouter({
       GoRoute(
         path: Routes.authView,
         builder: (context, state) => const AuthView(),
+      ),
+
+      GoRoute(
+        path: Routes.createCardView,
+        builder: (context, state) => const CreateCardView(),
       ),
 
       StatefulShellRoute.indexedStack(
