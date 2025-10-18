@@ -9,6 +9,7 @@ class CreateCardView extends StatefulWidget {
 
 class _CreateCardViewState extends State<CreateCardView> {
   static const double k20 = 20;
+  static const double k12 = 12;
   static const kPad20 = EdgeInsets.symmetric(horizontal: k20);
 
   final _formKey = GlobalKey<FormState>();
@@ -18,6 +19,14 @@ class _CreateCardViewState extends State<CreateCardView> {
   final _translationCtrl = TextEditingController();
   final _transcriptionCtrl = TextEditingController();
   final _exampleCtrl = TextEditingController();
+
+  //TODO чтобы кастомные типы юзер мог добавлять? возможно
+  final List<String> _types = const ['language', 'study'];
+  //TODO как то их задавать не здесь и чтобы от юзера хависели и от его колод
+  final List<String> _decks = const ['default', 'italian', 'flutter'];
+
+  String? _selectedType;
+  String? _selectedDeck;
 
   @override
   void dispose() {
@@ -29,17 +38,17 @@ class _CreateCardViewState extends State<CreateCardView> {
     super.dispose();
   }
 
-  String? _requared(String? userImput, String message) {
-    if (userImput == null || userImput.trim().isEmpty) return message;
+  String? _required(String? userInput, String message) {
+    if (userInput == null || userInput.trim().isEmpty) return message;
     return null;
   }
 
-  String? _transcription(String userImput) {
-    final trimed = userImput.trim();
-    if (trimed.isEmpty) return '';
-    final left = trimed.startsWith('[') ? '' : '[';
-    final right = trimed.endsWith(']') ? '' : ']';
-    return '$left$trimed$right';
+  String? _transcription(String userInput) {
+    final trimmed = userInput.trim();
+    if (trimmed.isEmpty) return '';
+    final left = trimmed.startsWith('[') ? '' : '[';
+    final right = trimmed.endsWith(']') ? '' : ']';
+    return '$left$trimmed$right';
   }
 
   void _submit() {}
@@ -54,17 +63,56 @@ class _CreateCardViewState extends State<CreateCardView> {
           padding: const EdgeInsets.all(k20),
           child: Form(
             key: _formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
                 Row(
                   children: [
                     // TODO тип карточки
                     Expanded(
-                      child: DropdownButton(items: [], onChanged: (value) {}),
+                      child: DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: 'type*'),
+                        initialValue:
+                            (_selectedType != null &&
+                                _types.contains(_selectedType))
+                            ? _selectedType
+                            : null,
+                        items: _types
+                            .map(
+                              (t) => DropdownMenuItem<String>(
+                                value: t,
+                                child: Text(t),
+                              ),
+                            )
+                            .toList(),
+                        validator: (v) => v == null ? 'choose a type' : null,
+                        onChanged: _types.isEmpty
+                            ? null
+                            : (String? v) => setState(() => _selectedType = v),
+                      ),
                     ),
                     // TODO колода
                     Expanded(
-                      child: DropdownButton(items: [], onChanged: (value) {}),
+                      child: DropdownButtonFormField(
+                        decoration: const InputDecoration(labelText: 'deck*'),
+                        initialValue:
+                            (_selectedDeck != null &&
+                                _decks.contains(_selectedDeck))
+                            ? _selectedDeck
+                            : null,
+                        items: _decks
+                            .map(
+                              (d) => DropdownMenuItem<String>(
+                                value: d,
+                                child: Text(d),
+                              ),
+                            )
+                            .toList(),
+                        validator: (v) => v == null ? 'choose a deck' : null,
+                        onChanged: _decks.isEmpty
+                            ? null
+                            : (String? v) => setState(() => _selectedDeck = v),
+                      ),
                     ),
                   ],
                 ),
@@ -82,8 +130,8 @@ class _CreateCardViewState extends State<CreateCardView> {
                           textInputAction: TextInputAction.next,
                           maxLength: 60,
                           validator: (value) {
-                            _requared(value, 'title is required');
-                            return null;
+                            _required(value, 'title is required');
+                            return;
                           },
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
@@ -125,14 +173,15 @@ class _CreateCardViewState extends State<CreateCardView> {
                           textInputAction: TextInputAction.next,
                           maxLength: 120,
                           validator: (value) {
-                            _requared(value, 'translation is required');
-                            return null;
+                            _required(value, 'translation is required');
+                            return;
                           },
                         ),
                         TextFormField(
                           controller: _transcriptionCtrl,
                           decoration: InputDecoration(
-                            labelText: '[transcription]',
+                            labelText: 'transcription',
+                            hintText: '[ˈsæmpl̩]',
                           ),
                           autocorrect: false,
                           enableSuggestions: false,
