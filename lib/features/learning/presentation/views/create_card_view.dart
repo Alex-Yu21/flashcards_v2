@@ -58,178 +58,212 @@ class _CreateCardViewState extends State<CreateCardView> {
     return '$left$trimmed$right';
   }
 
-  void _submit() {}
+  Future<void> _submit() async {}
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(),
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: kPad20,
-          child: Form(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Row(
-                    children: [
-                      // TODO тип карточки
-                      Expanded(
-                        child: DropdownButtonFormField<String>(
-                          decoration: const InputDecoration(labelText: 'type*'),
-                          initialValue: _selectedType,
-                          items: _types
-                              .map(
-                                (t) => DropdownMenuItem<String>(
-                                  value: t,
-                                  child: Text(t),
-                                ),
-                              )
-                              .toList(),
-                          validator: (v) => v == null ? 'choose a type' : null,
-                          onChanged: _types.isEmpty
-                              ? null
-                              : (String? v) =>
-                                    setState(() => _selectedType = v),
-                        ),
-                      ),
-                      // TODO колода
-                      SizedBox(width: k12),
-                      Expanded(
-                        child: DropdownButtonFormField<String>(
-                          decoration: const InputDecoration(labelText: 'deck*'),
-                          initialValue: _selectedDeck,
-                          items: _decks
-                              .map(
-                                (d) => DropdownMenuItem<String>(
-                                  value: d,
-                                  child: Text(d),
-                                ),
-                              )
-                              .toList(),
-                          validator: (v) => v == null ? 'choose a deck' : null,
-                          onChanged: _decks.isEmpty
-                              ? null
-                              : (String? v) =>
-                                    setState(() => _selectedDeck = v),
-                        ),
-                      ),
-                    ],
-                  ),
+      backgroundColor: cs.surface,
+      body: Padding(
+        padding: kPad20,
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                SizedBox(height: k20),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(k20),
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(
                       children: [
-                        Text('front side'),
-                        TextFormField(
-                          controller: _titleCtrl,
-                          decoration: InputDecoration(
-                            labelText: 'title*',
-                            counterText: '',
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            children: [
+                              // TODO тип карточки
+                              Expanded(
+                                child: DropdownButtonFormField<String>(
+                                  isExpanded: true,
+                                  decoration: const InputDecoration(
+                                    labelText: 'type*',
+                                  ),
+                                  initialValue: _selectedType,
+                                  items: _types
+                                      .map(
+                                        (t) => DropdownMenuItem<String>(
+                                          value: t,
+                                          child: Text(t),
+                                        ),
+                                      )
+                                      .toList(),
+                                  validator: (v) =>
+                                      v == null ? 'choose a type' : null,
+                                  onChanged: _types.isEmpty
+                                      ? null
+                                      : (String? v) =>
+                                            setState(() => _selectedType = v),
+                                ),
+                              ),
+                              // TODO колода
+                              const SizedBox(width: k12),
+                              Expanded(
+                                child: DropdownButtonFormField<String>(
+                                  isExpanded: true,
+                                  decoration: const InputDecoration(
+                                    labelText: 'deck*',
+                                  ),
+                                  initialValue: _selectedDeck,
+                                  items: _decks
+                                      .map(
+                                        (d) => DropdownMenuItem<String>(
+                                          value: d,
+                                          child: Text(d),
+                                        ),
+                                      )
+                                      .toList(),
+                                  validator: (v) =>
+                                      v == null ? 'choose a deck' : null,
+                                  onChanged: _decks.isEmpty
+                                      ? null
+                                      : (String? v) =>
+                                            setState(() => _selectedDeck = v),
+                                ),
+                              ),
+                            ],
                           ),
-                          autocorrect: false,
-                          textCapitalization: TextCapitalization.none,
-                          textInputAction: TextInputAction.next,
-                          maxLength: 60,
+                        ),
+                        const SizedBox(height: k20),
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(k20),
+                            child: Column(
+                              children: [
+                                const Text('front side'),
+                                TextFormField(
+                                  controller: _titleCtrl,
+                                  decoration: InputDecoration(
+                                    labelText: 'title*',
+                                    counterText: '',
+                                  ),
+                                  autocorrect: false,
+                                  textCapitalization: TextCapitalization.none,
+                                  textInputAction: TextInputAction.next,
+                                  maxLength: 60,
 
-                          validator: (value) {
-                            return _required(value, 'title is required');
-                          },
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).nextFocus(),
-                        ),
-                        TextFormField(
-                          controller: _descriptionCtrl,
-                          decoration: InputDecoration(
-                            labelText: 'description',
-                            hintText: 'brief context',
+                                  validator: (value) {
+                                    return _required(
+                                      value,
+                                      'title is required',
+                                    );
+                                  },
+                                  onFieldSubmitted: (_) =>
+                                      FocusScope.of(context).nextFocus(),
+                                ),
+                                TextFormField(
+                                  controller: _descriptionCtrl,
+                                  decoration: InputDecoration(
+                                    labelText: 'description',
+                                    hintText: 'brief context',
+                                  ),
+                                  autocorrect: true,
+                                  enableSuggestions: true,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  textInputAction: TextInputAction.next,
+                                  maxLength: 180,
+                                  maxLines: 3,
+                                  onFieldSubmitted: (_) =>
+                                      FocusScope.of(context).nextFocus(),
+                                ),
+                              ],
+                            ),
                           ),
-                          autocorrect: true,
-                          enableSuggestions: true,
-                          textCapitalization: TextCapitalization.sentences,
-                          textInputAction: TextInputAction.next,
-                          maxLength: 180,
-                          maxLines: 3,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).nextFocus(),
+                        ),
+                        const SizedBox(height: k20),
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(k20),
+                            child: Column(
+                              children: [
+                                const Text('back side'),
+                                TextFormField(
+                                  controller: _translationCtrl,
+                                  decoration: InputDecoration(
+                                    labelText: 'translation*',
+                                    counterText: '',
+                                  ),
+                                  autocorrect: true,
+                                  enableSuggestions: true,
+                                  textCapitalization: TextCapitalization.none,
+                                  textInputAction: TextInputAction.next,
+                                  maxLength: 120,
+                                  validator: (value) {
+                                    return _required(
+                                      value,
+                                      'translation is required',
+                                    );
+                                  },
+                                ),
+                                TextFormField(
+                                  controller: _transcriptionCtrl,
+                                  decoration: InputDecoration(
+                                    labelText: 'transcription',
+                                    hintText: '[ˈsæmpl̩]',
+                                    counterText: '',
+                                  ),
+                                  autocorrect: false,
+                                  enableSuggestions: false,
+                                  textCapitalization: TextCapitalization.none,
+                                  textInputAction: TextInputAction.next,
+                                  maxLength: 80,
+                                  onFieldSubmitted: (_) =>
+                                      FocusScope.of(context).nextFocus(),
+                                ),
+                                TextFormField(
+                                  controller: _exampleCtrl,
+                                  decoration: InputDecoration(
+                                    labelText: 'example',
+                                    hintText: 'short sentence with the term',
+                                  ),
+                                  autocorrect: true,
+                                  enableSuggestions: true,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  textInputAction: TextInputAction.done,
+                                  maxLines: 4,
+                                  maxLength: 180,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: k20),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(k20),
-                    child: Column(
-                      children: [
-                        Text('back side'),
-                        TextFormField(
-                          controller: _translationCtrl,
-                          decoration: InputDecoration(
-                            labelText: 'translation*',
-                            counterText: '',
-                          ),
-                          autocorrect: true,
-                          enableSuggestions: true,
-                          textCapitalization: TextCapitalization.none,
-                          textInputAction: TextInputAction.next,
-                          maxLength: 120,
-                          validator: (value) {
-                            return _required(value, 'translation is required');
-                          },
-                        ),
-                        TextFormField(
-                          controller: _transcriptionCtrl,
-                          decoration: InputDecoration(
-                            labelText: 'transcription',
-                            hintText: '[ˈsæmpl̩]',
-                            counterText: '',
-                          ),
-                          autocorrect: false,
-                          enableSuggestions: false,
-                          textCapitalization: TextCapitalization.none,
-                          textInputAction: TextInputAction.next,
-                          maxLength: 80,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).nextFocus(),
-                        ),
-                        TextFormField(
-                          controller: _exampleCtrl,
-                          decoration: InputDecoration(
-                            labelText: 'example',
-                            hintText: 'short sentence with the term',
-                          ),
-                          autocorrect: true,
-                          enableSuggestions: true,
-                          textCapitalization: TextCapitalization.sentences,
-                          textInputAction: TextInputAction.done,
-                          maxLines: 4,
-                          maxLength: 180,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: k20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    onPressed: _submit,
-                    icon: const Icon(Icons.check),
-                    label: const Text('Submit'),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+
+            SafeArea(
+              top: false,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: cs.primary,
+                  foregroundColor: cs.onPrimary,
+                ),
+                onPressed: _submit,
+                icon: const Icon(Icons.check),
+                label: const Text('Submit'),
+              ),
+            ),
+            SizedBox(height: k12),
+          ],
         ),
       ),
     );
